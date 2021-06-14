@@ -5,7 +5,9 @@ I used Python3 with Flask for my backend, and Vue3 for my frontend. Heading into
 To Run:
 
 cd into the server dir
+
 run `python app.py`
 
 cd into the frontend
+
 run `npm run serve --fix`
