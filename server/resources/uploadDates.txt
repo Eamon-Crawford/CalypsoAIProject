@@ -1,0 +1,1 @@
+2021-06-15 14:00:18.550860: smallExampleFile.csv
