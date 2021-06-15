@@ -42,7 +42,7 @@ def handleUploadedCsvFile():
 
     for key, file in request.files.items():
         if key == '':
-           return "File not found", 400
+            return "File not found", 400
         elif file and allowedFile(key):
             saveCsvFile(file, key)
     return "File(s) read succesfully", 200
@@ -65,20 +65,24 @@ def viewFile(fileName, pageNumber):
             lines = file.readlines()
             lines = lines[1:]
 
-        for i in range(min(pageNumber*500, len(lines))-500, min(pageNumber*500, len(lines))):
+        numberOfRows = len(lines)
+        pageNumber = checkValidPageNumber(pageNumber, numberOfRows)
+        
+        startingRow = max(min(pageNumber*500, numberOfRows) - 500, 0)
+        endingRow = min(pageNumber*500, numberOfRows)
+
+        #The below line handles indexing through all rows in the file, 500 rows at a time
+        for i in range(startingRow, endingRow):
             line = lines[i]
             line = line.split(',')
             contentObject = csvContent.createCsvContent(line[0],line[1],line[2],line[3],line[4],
             line[5],line[6],line[7],line[8],line[9],line[10].strip())
             csvContentList.append(contentObject.__dict__)
 
-        if (pageNumber*500) -500 > len(lines):
-            pageNumber -= 1
-
         return jsonify({
-        'status': 'success',
-        'csvContentList': csvContentList,
-        'pageNumber': pageNumber
+            'status': 'success',
+            'csvContentList': csvContentList,
+            'pageNumber': pageNumber
         })
     else:
         return "File not Found", 404

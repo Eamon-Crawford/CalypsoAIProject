@@ -12,7 +12,7 @@ ALLOWED_EXTENSIONS = {'csv'}
 # Check if file extention is allowed
 def allowedFile(fileName):
     return '.' in fileName and \
-           fileName.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+            fileName.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # The below method stops an upload from overwriting a prev uploaded file
 def renameFileIfNameInPath(originalName):
@@ -84,3 +84,10 @@ def saveContentYearStats(pdData, fileName):
 def getStatsPath(fileName):
     fileName = fileName[:-4] + "Stats" + ".txt"
     return UPLOADS_STATS_DATA_PATH + fileName
+
+def checkValidPageNumber(pageNumber, numberOfRows):
+    if pageNumber < 1:
+        pageNumber = 1
+    elif (pageNumber*500) -500 > numberOfRows:
+        pageNumber = (numberOfRows//500) + 1
+    return pageNumber
