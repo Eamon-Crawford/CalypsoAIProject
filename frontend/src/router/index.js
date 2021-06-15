@@ -3,7 +3,6 @@ import CsvHome from '@/components/CsvHome.vue';
 import ViewCsv from '@/components/ViewCsv.vue';
 import StatsCsv from '@/components/StatsCsv.vue';
 import PageNotFound from '@/components/PageNotFound.vue';
-// import About from "@/views/About.vue";
 
 const routes = [
   {
@@ -34,3 +33,5 @@ const router = createRouter({
 });
 
 export default router;
+
+// This file creates a dependency cycle with the other .vue files

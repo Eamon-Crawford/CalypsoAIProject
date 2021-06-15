@@ -1,9 +1,8 @@
 <template>
-    <div class="container">
+    <div>
         <h1>CSV Application</h1>
         <hr>
-        <button type="button" class="btn btn-success btn-sm"
-        v-on:click="pickFile">Upload CSV File</button>
+        <button type="button" v-on:click="pickFile">Upload CSV File</button>
         <input
             type="file"
             style="display: none"
@@ -16,7 +15,7 @@
              <p>{{ uploadedFileName }}</p>
         </div>
         <h3>Previous Uploads</h3>
-        <table class="table table-hover">
+        <table>
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Name</th>
@@ -26,14 +25,10 @@
                 <td>{{ csvFile.date }}</td>
                 <td>{{ csvFile.name }}</td>
                 <td>
-                <button type="button" class="btn btn-info btn-sm"
-                  v-on:click="viewFile(csvFile.name)">View</button>
-                <button type="button" class="btn btn-info btn-sm"
-                  v-on:click="deleteFile(csvFile.name)">Delete</button>
-                <button type="button" class="btn btn-danger btn-sm"
-                  v-on:click="downloadCsvFile(csvFile.name)">Download</button>
-                <button type="button" class="btn btn-danger btn-sm"
-                  v-on:click="viewStats(csvFile.name)">Stats</button>
+                <button type="button" v-on:click="viewFile(csvFile.name)">View</button>
+                <button type="button" v-on:click="deleteFile(csvFile.name)">Delete</button>
+                <button type="button" v-on:click="downloadCsvFile(csvFile.name)">Download</button>
+                <button type="button" v-on:click="viewStats(csvFile.name)">Stats</button>
                 </td>
             </tr>
             </tbody>
@@ -104,7 +99,6 @@ export default {
     },
 
     viewFile(name) {
-      console.log(name);
       router.push({ name: 'ViewCsv', params: { name } });
     },
 
@@ -138,7 +132,6 @@ export default {
     },
 
     viewStats(name) {
-      console.log(name);
       router.push({ name: 'StatsCsv', params: { name } });
     },
   },

@@ -1,16 +1,15 @@
 <template>
-    <div class="container">
+    <div>
         <h1>CSV Application</h1>
         <hr>
-        <button type="button" class="btn btn-success btn-sm"
-        v-on:click="goHome">Go to Home</button>
+        <button type="button" v-on:click="goHome">Go to Home</button>
 
         <div v-if="fileName != null">
             <h3>{{ fileName }}</h3>
             <h5>Page Number {{pageNumber}} </h5>
         </div>
 
-        <table class="table table-hover">
+        <table>
             <tr>
                 <th scope="col">Year</th>
                 <th scope="col">Count</th>
@@ -46,7 +45,6 @@ export default {
       const path = `/csv/stats/${this.fileName}`;
       axiosInstance.get(path)
         .then((res) => {
-          console.log(res.data);
           this.csvYearStats = res.data.csvYearStats;
         })
         .catch((error) => {

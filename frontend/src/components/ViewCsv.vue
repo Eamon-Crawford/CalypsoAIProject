@@ -1,27 +1,23 @@
 <template>
-    <div class="container">
+    <div>
         <h1>CSV Application</h1>
         <hr>
-        <button type="button" class="btn btn-success btn-sm"
-        v-on:click="goHome">Go to Home</button>
+        <button type="button" v-on:click="goHome">Go to Home</button>
 
         <div v-if="fileName != null">
             <h3>{{ fileName }}</h3>
             <h5>Page Number {{pageNumber}} </h5>
         </div>
 
-        <button type="button" class="btn btn-success btn-sm"
-        v-on:click="prevPage">Prev Page</button>
+        <button type="button" v-on:click="prevPage">Prev Page</button>
 
-        <input type="number" v-model="goToPageNumber"/>
-        <button type="button" class="btn btn-success btn-sm"
-        v-on:click="goToPage(goToPageNumber)">Go to Page</button>
+        <input type="number" min=0 oninput="validity.valid||(value='');" v-model="goToPageNumber"/>
+        <button type="button" v-on:click="goToPage(goToPageNumber)">Go to Page</button>
 
-        <button type="button" class="btn btn-success btn-sm"
-        v-on:click="nextPage">Next Page</button>
+        <button type="button" v-on:click="nextPage">Next Page</button>
         <!-- Assuming the csv headers are fixed,
         and that we dont handle files that are not of this format -->
-        <table class="table table-hover">
+        <table>
             <tr>
                 <th scope="col">Index</th>
                 <th scope="col">GUID</th>
@@ -76,10 +72,14 @@ export default {
 
   methods: {
     getCsvfile() {
+      if (this.pageNumber < 0) {
+        this.pageNumber = 0;
+      }
       const path = `/csv/view/${this.fileName}/${this.pageNumber}`;
       axiosInstance.get(path)
         .then((res) => {
           this.csvFileData = res.data.csvContentList;
+          // Below line checks if page number has been changed on the backend, and if so sets it
           if (res.data.pageNumber - 1 !== this.pageNumber) {
             this.pageNumber = res.data.pageNumber - 1;
           }
